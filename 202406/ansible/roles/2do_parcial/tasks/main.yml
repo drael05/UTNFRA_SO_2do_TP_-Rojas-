@@ -1,0 +1,25 @@
+---
+- name: Crear /tmp/2do_parcial/alumno
+  file: path=/tmp/2do_parcial/alumno state=directory mode=0755
+
+- name: Crear /tmp/2do_parcial/equipo
+  file: path=/tmp/2do_parcial/equipo state=directory mode=0755
+
+- name: datos_alumno.txt
+  template:
+    src: datos_alumno.j2
+    dest: /tmp/2do_parcial/alumno/datos_alumno.txt
+    mode: 0644
+
+- name: datos_equipo.txt
+  template:
+    src: datos_equipo.j2
+    dest: /tmp/2do_parcial/equipo/datos_equipo.txt
+    mode: 0644
+
+- name: sudoers 2PSupervisores
+  lineinfile:
+    path: /etc/sudoers
+    line: '%2PSupervisores ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+    backup: yes
